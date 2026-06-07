@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.yourname.notepad" version="1.0.0"
+  xmlns="http://www.w3.org/ns/widgets"
+  xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>NotepadApp</name>
+  <description>My Notepad App</description>
+  <author>Your Name</author>
+  <content src="index.html" />
+  <platform name="android" />
+</widget>
