@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>CLOUD</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ SPLASH SCREEN -->
+<div id="splash">
+  <div class="splash-core">
+    <div class="splash-hex"></div>
+    <div class="splash-ring r1"></div>
+    <div class="splash-ring r2"></div>
+    <div class="splash-ring r3"></div>
+    <div class="splash-logo">☁</div>
+    <div class="splash-title">CLOUD</div>
+    <div class="splash-sub">INITIALIZING SYSTEM...</div>
+    <div class="splash-bar"><div class="splash-progress"></div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ APP WRAPPER -->
+<div id="app" class="hidden">
+
+  <!-- ════════════════════════ PAGE: NOTEPAD -->
+  <div id="page-notepad" class="page active">
+    <header class="app-header">
+      <div class="header-logo"><span>☁</span></div>
+      <div class="header-title-block">
+        <div class="header-corner tl"></div>
+        <div class="header-corner tr"></div>
+        <h1 class="header-title">NOTE PAD</h1>
+        <div class="header-deco-line"></div>
+      </div>
+      <button class="header-btn" id="notepad-settings-btn" title="Settings">⚙</button>
+    </header>
+
+    <div class="notepad-body">
+      <!-- Sidebar -->
+      <aside class="category-sidebar" id="category-sidebar">
+        <div class="sidebar-label">CATEGORIES</div>
+        <ul class="category-list" id="category-list"></ul>
+        <button class="cat-add-btn" id="cat-add-btn" title="Add category">＋</button>
+      </aside>
+
+      <!-- Notes grid -->
+      <main class="notes-area" id="notes-area">
+        <div class="notes-filter-bar">
+          <span class="notes-cat-name" id="notes-cat-name">ALL NOTES</span>
+          <div class="notes-count" id="notes-count">0</div>
+        </div>
+        <div class="notes-grid" id="notes-grid"></div>
+        <div class="empty-state hidden" id="empty-state">
+          <div class="empty-icon">📄</div>
+          <div class="empty-text">No notes yet.<br>Tap + to create one.</div>
+        </div>
+      </main>
+    </div>
+
+    <!-- FAB -->
+    <button class="fab" id="fab-note" title="New Note">＋</button>
+  </div>
+
+  <!-- ════════════════════════ PAGE: CALENDAR -->
+  <div id="page-calendar" class="page">
+    <header class="app-header">
+      <div class="header-logo"><span>☁</span></div>
+      <div class="header-title-block">
+        <div class="header-corner tl"></div>
+        <div class="header-corner tr"></div>
+        <h1 class="header-title">CALENDAR</h1>
+        <div class="header-deco-line"></div>
+      </div>
+      <button class="header-btn" id="cal-settings-btn" title="Settings">⚙</button>
+    </header>
+
+    <div class="calendar-body">
+      <div class="cal-nav">
+        <button class="cal-nav-btn" id="cal-prev">◀</button>
+        <div class="cal-month-display" id="cal-month-display">2026 MAY</div>
+        <button class="cal-nav-btn" id="cal-next">▶</button>
+      </div>
+
+      <div class="cal-grid-wrap">
+        <div class="cal-weekdays">
+          <span>SUN</span><span>MON</span><span>TUE</span><span>WED</span>
+          <span>THU</span><span>FRI</span><span>SAT</span>
+        </div>
+        <div class="cal-days" id="cal-days"></div>
+      </div>
+
+      <div class="events-panel">
+        <div class="events-panel-header">
+          <span class="events-date-label" id="events-date-label">SELECT A DATE</span>
+          <button class="fab-inline" id="fab-event">＋</button>
+        </div>
+        <ul class="events-list" id="events-list">
+          <li class="event-empty">No events for this day.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ PAGE: MIND MAPS -->
+  <div id="page-mindmap" class="page">
+    <header class="app-header">
+      <div class="header-logo"><span>☁</span></div>
+      <div class="header-title-block">
+        <div class="header-corner tl"></div>
+        <div class="header-corner tr"></div>
+        <h1 class="header-title">MIND MAPS</h1>
+        <div class="header-deco-line"></div>
+      </div>
+      <button class="header-btn" id="mm-settings-btn" title="Settings">⚙</button>
+    </header>
+
+    <div class="mm-list-body">
+      <div class="mm-search-row">
+        <input type="text" class="mm-search" id="mm-search" placeholder="Search mind maps..." />
+        <select class="mm-sort" id="mm-sort">
+          <option value="modified">Recent</option>
+          <option value="name">Name</option>
+          <option value="created">Created</option>
+        </select>
+      </div>
+      <div class="mm-grid" id="mm-grid"></div>
+      <div class="empty-state hidden" id="mm-empty">
+        <div class="empty-icon">🧠</div>
+        <div class="empty-text">No mind maps yet.<br>Tap + to create one.</div>
+      </div>
+    </div>
+    <button class="fab" id="fab-mm">＋</button>
+  </div>
+
+  <!-- ════════════════════════ NOTE EDITOR (overlay) -->
+  <div id="note-editor" class="overlay hidden">
+    <div class="editor-header">
+      <button class="editor-back-btn" id="editor-back">◀ BACK</button>
+      <input type="text" class="editor-title-input" id="editor-title" placeholder="NOTE TITLE..." />
+      <div class="editor-actions">
+        <button class="editor-action-btn" id="editor-save" title="Save">💾</button>
+        <button class="editor-action-btn" id="editor-mm-btn" title="Mind Map">🧠</button>
+        <button class="editor-action-btn" id="editor-img-btn" title="Insert Image">🖼</button>
+      </div>
+    </div>
+    <div class="editor-meta" id="editor-meta"></div>
+    <div class="editor-toolbar">
+      <button class="tb-btn" data-cmd="bold"><b>B</b></button>
+      <button class="tb-btn" data-cmd="italic"><i>I</i></button>
+      <button class="tb-btn" data-cmd="underline"><u>U</u></button>
+      <button class="tb-btn" data-cmd="strikeThrough"><s>S</s></button>
+      <button class="tb-btn" data-cmd="insertUnorderedList">• List</button>
+      <button class="tb-btn" data-cmd="insertOrderedList">1. List</button>
+      <button class="tb-btn" id="tb-link">🔗 Link</button>
+    </div>
+    <div class="editor-content" id="editor-content" contenteditable="true" spellcheck="true">
+    </div>
+    <div class="autosave-indicator" id="autosave-indicator">AUTO-SAVED ✓</div>
+    <input type="file" id="img-file-input" accept="image/*" class="hidden" />
+  </div>
+
+  <!-- ════════════════════════ MIND MAP CANVAS (overlay) -->
+  <div id="mindmap-canvas-overlay" class="overlay hidden">
+    <div class="mm-canvas-header">
+      <button class="editor-back-btn" id="mm-back">◀ BACK</button>
+      <input type="text" class="editor-title-input" id="mm-title-input" placeholder="MAP TITLE..." />
+      <div class="editor-actions">
+        <button class="editor-action-btn" id="mm-save" title="Save">💾</button>
+        <button class="editor-action-btn" id="mm-undo" title="Undo">↩</button>
+        <button class="editor-action-btn" id="mm-redo" title="Redo">↪</button>
+      </div>
+    </div>
+    <div class="mm-toolbar">
+      <button class="mm-tb-btn" id="mm-add-text" title="Add Text Node">＋ Text</button>
+      <button class="mm-tb-btn" id="mm-add-link" title="Add Link Node">＋ Link</button>
+      <button class="mm-tb-btn" id="mm-connect-mode" title="Connect Nodes">⚡ Connect</button>
+      <button class="mm-tb-btn" id="mm-delete-node" title="Delete Selected">🗑 Delete</button>
+      <span class="mm-hint" id="mm-hint">Drag nodes · Scroll to zoom · Pinch to zoom</span>
+    </div>
+    <canvas id="mm-canvas"></canvas>
+  </div>
+
+  <!-- ════════════════════════ SETTINGS (overlay) -->
+  <div id="settings-overlay" class="overlay hidden">
+    <div class="settings-header">
+      <button class="editor-back-btn" id="settings-back">◀ BACK</button>
+      <h2 class="settings-title">SETTINGS</h2>
+    </div>
+    <div class="settings-body">
+      <div class="settings-section">
+        <div class="settings-section-title">APPEARANCE</div>
+        <div class="settings-row">
+          <span>Accent Color</span>
+          <input type="color" id="accent-color" value="#ff6600" />
+        </div>
+        <div class="settings-row">
+          <span>Font Size</span>
+          <select id="font-size-setting">
+            <option value="14">Small</option>
+            <option value="16" selected>Medium</option>
+            <option value="18">Large</option>
+          </select>
+        </div>
+      </div>
+      <div class="settings-section">
+        <div class="settings-section-title">CALENDAR</div>
+        <div class="settings-row">
+          <span>Date Format</span>
+          <select id="date-format-setting">
+            <option value="mdy">MM/DD/YYYY</option>
+            <option value="dmy">DD/MM/YYYY</option>
+            <option value="ymd" selected>YYYY-MM-DD</option>
+          </select>
+        </div>
+        <div class="settings-row">
+          <span>Week Starts</span>
+          <select id="week-start-setting">
+            <option value="0" selected>Sunday</option>
+            <option value="1">Monday</option>
+          </select>
+        </div>
+      </div>
+      <div class="settings-section">
+        <div class="settings-section-title">DATA</div>
+        <div class="settings-row">
+          <button class="settings-action-btn" id="export-data">⬆ Export All Data</button>
+        </div>
+        <div class="settings-row">
+          <button class="settings-action-btn" id="import-data-btn">⬇ Import Data</button>
+          <input type="file" id="import-file" accept=".json" class="hidden" />
+        </div>
+        <div class="settings-row">
+          <button class="settings-action-btn danger" id="clear-data">🗑 Clear All Data</button>
+        </div>
+      </div>
+      <div class="settings-section">
+        <div class="settings-section-title">ABOUT</div>
+        <div class="settings-row about-row">
+          <span>CLOUD App v1.0</span>
+          <span class="muted">Offline · No account needed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ MODALS -->
+  <div id="modal-backdrop" class="modal-backdrop hidden"></div>
+
+  <!-- Add Category Modal -->
+  <div id="modal-cat" class="modal hidden">
+    <div class="modal-title">NEW CATEGORY</div>
+    <input type="text" class="modal-input" id="modal-cat-input" placeholder="Category name..." maxlength="24" />
+    <div class="modal-actions">
+      <button class="modal-btn cancel" id="modal-cat-cancel">CANCEL</button>
+      <button class="modal-btn confirm" id="modal-cat-confirm">CREATE</button>
+    </div>
+  </div>
+
+  <!-- Add Event Modal -->
+  <div id="modal-event" class="modal hidden">
+    <div class="modal-title">NEW EVENT</div>
+    <input type="text" class="modal-input" id="modal-event-title" placeholder="Event title..." maxlength="60" />
+    <select class="modal-input" id="modal-event-type">
+      <option value="reminder">⏰ Reminder</option>
+      <option value="birthday">🎂 Birthday</option>
+      <option value="task">📌 Task</option>
+      <option value="meeting">💼 Meeting</option>
+      <option value="anniversary">💍 Anniversary</option>
+      <option value="custom">⭐ Custom</option>
+    </select>
+    <input type="time" class="modal-input" id="modal-event-time" />
+    <div class="modal-actions">
+      <button class="modal-btn cancel" id="modal-event-cancel">CANCEL</button>
+      <button class="modal-btn confirm" id="modal-event-confirm">ADD</button>
+    </div>
+  </div>
+
+  <!-- Generic confirm Modal -->
+  <div id="modal-confirm" class="modal hidden">
+    <div class="modal-title" id="modal-confirm-title">CONFIRM</div>
+    <div class="modal-text" id="modal-confirm-text"></div>
+    <div class="modal-actions">
+      <button class="modal-btn cancel" id="modal-confirm-cancel">CANCEL</button>
+      <button class="modal-btn confirm danger" id="modal-confirm-ok">DELETE</button>
+    </div>
+  </div>
+
+  <!-- Note options bottom sheet -->
+  <div id="note-options-sheet" class="bottom-sheet hidden">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title" id="sheet-note-title">NOTE OPTIONS</div>
+    <ul class="sheet-list">
+      <li class="sheet-item" id="sheet-edit">✏ Edit</li>
+      <li class="sheet-item" id="sheet-duplicate">📋 Duplicate</li>
+      <li class="sheet-item" id="sheet-move-cat">📁 Move Category</li>
+      <li class="sheet-item" id="sheet-open-mm">🧠 Open Mind Map</li>
+      <li class="sheet-item danger" id="sheet-delete">🗑 Delete</li>
+    </ul>
+  </div>
+
+  <!-- Category options sheet -->
+  <div id="cat-options-sheet" class="bottom-sheet hidden">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title" id="sheet-cat-name">CATEGORY OPTIONS</div>
+    <ul class="sheet-list">
+      <li class="sheet-item" id="sheet-cat-rename">✏ Rename</li>
+      <li class="sheet-item danger" id="sheet-cat-delete">🗑 Delete</li>
+    </ul>
+  </div>
+
+  <!-- Move category sheet -->
+  <div id="move-cat-sheet" class="bottom-sheet hidden">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">MOVE TO CATEGORY</div>
+    <ul class="sheet-list" id="move-cat-list"></ul>
+  </div>
+
+  <!-- ════════════════════════ BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-page="notepad">
+      <span class="nav-icon">📄</span>
+      <span class="nav-label">NOTES</span>
+    </button>
+    <button class="nav-btn" data-page="mindmap">
+      <span class="nav-icon">🧠</span>
+      <span class="nav-label">MAPS</span>
+    </button>
+    <button class="nav-btn" data-page="calendar">
+      <span class="nav-icon">📅</span>
+      <span class="nav-label">CALENDAR</span>
+    </button>
+  </nav>
+
+</div><!-- /app -->
+
+<script src="script.js"></script>
+</body>
+    </html>
+      
